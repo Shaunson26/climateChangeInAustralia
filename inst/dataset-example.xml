@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gridDataset location="/thredds/ncss/ua6_4/CMIP5/derived/Collections/Projected_Change_Data/Mean_Temperature/2020-2039/tas_Amon_ACCESS1-0_rcp45_r1i1p1_2020-2039-abs-change-wrt-1986-2005-seasavg-clim_native.nc" path="path">
+  <axis name="lat" shape="145" type="double" axisType="Lat">
+    <attribute name="standard_name" value="latitude" />
+    <attribute name="long_name" value="latitude" />
+    <attribute name="units" value="degrees_north" />
+    <attribute name="axis" value="Y" />
+    <attribute name="bounds" value="lat_bnds" />
+    <attribute name="_CoordinateAxisType" value="Lat" />
+    <values start="-90.0" increment="1.25" npts="145" />
+  </axis>
+  <axis name="lon" shape="192" type="double" axisType="Lon">
+    <attribute name="standard_name" value="longitude" />
+    <attribute name="long_name" value="longitude" />
+    <attribute name="units" value="degrees_east" />
+    <attribute name="axis" value="X" />
+    <attribute name="bounds" value="lon_bnds" />
+    <attribute name="_CoordinateAxisType" value="Lon" />
+    <values start="0.0" increment="1.875" npts="192" />
+  </axis>
+  <axis name="time" shape="1" type="double" axisType="Time">
+    <attribute name="standard_name" value="time" />
+    <attribute name="units" value="years since 2006-01-01 12:00:00" />
+    <attribute name="calendar" value="standard" />
+    <attribute name="_CoordinateAxisType" value="Time" />
+    <values>24.0</values>
+  </axis>
+  <gridSet name="time lat lon">
+    <projectionBox>
+      <minx>-0.9375</minx>
+      <maxx>359.0625</maxx>
+      <miny>-90.0</miny>
+      <maxy>90.0</maxy>
+    </projectionBox>
+    <axisRef name="time" />
+    <axisRef name="lat" />
+    <axisRef name="lon" />
+    <grid name="tas_annual" desc="Near-Surface Air Temperature (annual)" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature (annual)" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_april" desc="Near-Surface Air Temperature april" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature april" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_august" desc="Near-Surface Air Temperature august" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature august" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_december" desc="Near-Surface Air Temperature december" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature december" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_djf" desc="Near-Surface Air Temperature (djf)" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature (djf)" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_february" desc="Near-Surface Air Temperature february" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature february" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_january" desc="Near-Surface Air Temperature january" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature january" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_jja" desc="Near-Surface Air Temperature (jja)" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature (jja)" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_july" desc="Near-Surface Air Temperature july" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature july" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_june" desc="Near-Surface Air Temperature june" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature june" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_mam" desc="Near-Surface Air Temperature (mam)" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature (mam)" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_march" desc="Near-Surface Air Temperature march" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature march" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_may" desc="Near-Surface Air Temperature may" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature may" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_mjjaso" desc="Near-Surface Air Temperature (mjjaso)" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature (mjjaso)" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_ndjfma" desc="Near-Surface Air Temperature (ndjfma)" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature (ndjfma)" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_november" desc="Near-Surface Air Temperature november" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature november" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_october" desc="Near-Surface Air Temperature october" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature october" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_september" desc="Near-Surface Air Temperature september" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature september" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+    <grid name="tas_son" desc="Near-Surface Air Temperature (son)" shape="time lat lon" type="float">
+      <attribute name="standard_name" value="air_temperature" />
+      <attribute name="long_name" value="Near-Surface Air Temperature (son)" />
+      <attribute name="units" value="K" />
+      <attribute name="_FillValue" type="float" value="1.0E20" />
+      <attribute name="missing_value" type="float" value="1.0E20" />
+      <attribute name="associated_files" value="baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_atmos_fx_ACCESS1-0_rcp45_r0i0p0.nc areacella: areacella_fx_ACCESS1-0_rcp45_r0i0p0.nc" />
+      <attribute name="cell_methods" value="time: mean over years" />
+      <attribute name="history" value="2012-01-25T04:46:37Z altered by CMOR: Treated scalar dimension:'height'. 2012-01-25T04:46:37Z altered by CMOR: replaced missing value flag (-1.07374e+09) with standard missing value (1e+20)." />
+    </grid>
+  </gridSet>
+  <LatLonBox>
+    <west>0.0000</west>
+    <east>358.1250</east>
+    <south>-90.0000</south>
+    <north>90.0000</north>
+  </LatLonBox>
+  <TimeSpan>
+    <begin>2030-01-01T07:30:23.393Z</begin>
+    <end>2030-01-01T07:30:23.393Z</end>
+  </TimeSpan>
+  <AcceptList>
+    <GridAsPoint>
+      <accept displayName="xml">xml</accept>
+      <accept displayName="xml (file)">xml_file</accept>
+      <accept displayName="csv">csv</accept>
+      <accept displayName="csv (file)">csv_file</accept>
+      <accept displayName="geocsv">geocsv</accept>
+      <accept displayName="geocsv (file)">geocsv_file</accept>
+      <accept displayName="netcdf">netcdf</accept>
+    </GridAsPoint>
+    <Grid>
+      <accept displayName="netcdf">netcdf</accept>
+    </Grid>
+  </AcceptList>
+</gridDataset>

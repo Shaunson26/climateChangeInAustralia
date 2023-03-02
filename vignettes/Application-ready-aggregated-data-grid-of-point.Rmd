@@ -1,0 +1,271 @@
+---
+title: "Explore application ready aggregated data - Grid of points"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Explore application ready aggregated data - Grid of points}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(climateChangeInAustralia)
+
+# 
+library(stars)
+library(sf)
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(ggplot2)
+library(units)
+# 
+library(boundariesNSW)
+```
+
+## Application ready aggregated
+
+See [introduction to application ready data](https://www.climatechangeinaustralia.gov.au/en/obtain-data/application-ready-data/).
+The aggregated files contain Monthly, seasonal and annual data as time-series. They 
+contain a single time value per range period (e.g. 2016-2045 has only 2031-01-01) per grid point (lat/lon),
+and then model values for monthly, seasonal and annual data (the remaining 'columns')
+
+### A small download
+
+Here we will download `Mean_Temperature` for `2016-2045` for `ACCESS1-0` and `rcp45`, and
+then constrain to the the the Greater Sydney Area bounding box using `boundariesNSW`.
+
+Get the boundary information.
+
+```{r}
+greater_sydney_boundary <- 
+  bnsw_get_map('gccsa2016') |>
+  dplyr::filter(GCC_NAME16 == 'Greater Sydney')
+
+greater_sydney_boundary_bbox <- sf::st_bbox(greater_sydney_boundary)
+greater_sydney_boundary_bbox
+```
+
+Download the data. Note how the datetime_start have no effect ...
+
+```{r}
+ccia_dataset_urls <- ccia_dataset_urls()
+
+dataset_url <- 
+  ccia_dataset_urls$
+  application_ready_aggregated$
+  Mean_Temperature$
+  `2016-2045`$
+  `tas_aus_ACCESS1-0_rcp45_r1i1p1_CSIRO-MnCh-wrt-1986-2005-Scl_v1_mon_seasavg_2016-2045_clim.nc`
+
+dataset_query <-
+  dataset_url |>
+  ccia_create_dataset_request_url(access_type = ccia_access_types$NetcdfSubset) |>
+  ccia_add_netcdf_subset_query(vars = 'all',
+                               # Greater Sydney Area
+                               bbox = greater_sydney_boundary_bbox,
+                               # No effect (in this case)
+                               datetime_start = '2016-01-01',
+                               datetime_end = '2045-12-31',
+                               datetime_step = 365)
+
+
+
+dataset_download_filepath <-
+  dataset_query |>
+  ccia_perform_query(destfile = tempfile(fileext = 'tas_aus_ACCESS1-0_rcp45_seasavg_2016-2045.nc'))
+
+structure(
+  file.size(dataset_download_filepath),
+  class = 'object_size'
+) |>
+  format(units = 'MB')
+```
+
+Import into R, wrangle and make a plot.
+
+```{r}
+tas_ncdf <-
+  dataset_download_filepath |>
+  stars::read_stars()
+
+tas_ncdf
+```
+
+```{r}
+tas_ncdf_month <-
+  # first 12 values are monthly estimates
+  tas_ncdf[1:12] |>
+  # merge attributes (temperatures) into a new dimension
+  # and set it's values to month names
+  merge() |>
+  st_set_dimensions(4, values = month.name) |>
+  # pop the time dimension
+  split('time') |>
+  # rename
+  st_set_dimensions(names = c('x', 'y', 'time')) |>
+  setNames('Temp')
+
+# Match CRS to boundary for cropping (as it's missing also)
+tas_ncdf_month <-
+  tas_ncdf_month |>
+  st_set_crs(value = st_crs(greater_sydney_boundary))
+```
+
+```{r, fig.width=8, fig.height=8}
+ggplot() +
+  geom_stars(data = tas_ncdf_month[greater_sydney_boundary]) +
+  facet_wrap(~time) +
+  theme_void() +
+  labs(title = 'Mean monthly temperature',
+       subtitle = 'model: ACCESS1, scenario: rcp45')
+```
+
+### A time-series download
+
+Needs a bit of R jujitsu ..
+
+```{r}
+ccia_dataset_urls <- ccia_dataset_urls()
+
+# Extract model 'ACCESS1-0_rcp85' through element names
+series_urls <-
+  lapply(ccia_dataset_urls$application_ready_aggregated$Mean_Temperature, function(urls){
+    
+    urls[grepl('ACCESS1-0_rcp85', names(urls))]
+    
+  })
+
+# Expect 4 results
+sapply(series_urls, names)
+
+# Build requests
+series_requests <-
+  lapply(series_urls, function(url){
+    
+    url |>
+      ccia_create_dataset_request_url(access_type = ccia_access_types$NetcdfSubset) |>
+      ccia_add_netcdf_subset_query(vars = 'all',
+                                   # Greater Sydney Area
+                                   bbox = greater_sydney_boundary_bbox)
+  })
+
+# Download data
+series_filepaths <-
+  lapply(series_requests, function(req){
+    
+    filename <- sub('.*\\d/(.*\\.nc).*', '\\1', req$url)
+    
+    req |>
+      ccia_perform_query(destfile = tempfile(pattern = 'ccia-', fileext = filename))
+    
+  })
+```
+
+Import into R, wrangle and make some plota.
+
+```{r}
+series_stars <-
+  lapply(series_filepaths, stars::read_ncdf, var = 'tas_annual')
+
+do.call(c, series_stars) |>
+  plot(key.pos = 1,
+       box_col = 0)
+```
+
+#### Monthly
+
+```{r}
+month_var_names <- paste0('tas_', tolower(month.name))
+
+series_stars <-
+  lapply(series_filepaths, stars::read_ncdf, var = month_var_names)
+
+wrangle_months <- function(x){
+  
+  year <-
+    x |>
+    st_get_dimension_values('time') |>
+    format('%Y')
+  
+  x[month_var_names] |>
+    merge() |>
+    st_set_dimensions(4, values = paste(month.abb, year)) |>
+    split('time') |>
+    st_set_dimensions(names = c('x', 'y', 'time')) |>
+    setNames('Temp')
+}
+
+series_stars_wrangled <-
+  lapply(rev(series_stars), wrangle_months) |>
+  do.call(what = c)
+
+series_stars_wrangled <-
+  series_stars_wrangled |>
+  st_transform(crs = st_crs(greater_sydney_boundary)) 
+
+series_stars_wrangled <- 
+  series_stars_wrangled[greater_sydney_boundary]
+```
+
+```{r}
+# downsampled for faster plotting
+ggplot() +
+  geom_stars(data = series_stars_wrangled, downsample = c(2,2,0)) +
+  facet_wrap(~time, ncol = 4, dir = 'v') +
+  theme_void()
+```
+
+#### Seasonal
+
+```{r}
+season_var_names <- 
+  c(summer = 'tas_djf', 
+    autumn = 'tas_mam', 
+    winter = 'tas_jja',
+    spring = 'tas_son')
+
+series_stars <-
+  lapply(series_filepaths, stars::read_ncdf, var = season_var_names)
+
+wrangle_seasons <- function(x){
+  
+  year <-
+    x |>
+    st_get_dimension_values('time') |>
+    format('%Y')
+  
+  x[season_var_names] |>
+    merge() |>
+    st_set_dimensions(4, values = paste(names(season_var_names), year)) |>
+    split('time') |>
+    st_set_dimensions(names = c('x', 'y', 'time')) |>
+    setNames('Temp')
+}
+
+series_stars_wrangled <-
+  lapply(rev(series_stars), wrangle_seasons) |>
+  do.call(what = c)
+
+series_stars_wrangled <-
+  series_stars_wrangled |>
+  st_transform(crs = st_crs(greater_sydney_boundary)) 
+
+series_stars_wrangled <- 
+  series_stars_wrangled[greater_sydney_boundary]
+
+ggplot() +
+  geom_stars(data = series_stars_wrangled, downsample = c(1,1,0)) +
+  facet_wrap(~time, ncol = 4) +
+  scale_fill_continuous(type = 'viridis') +
+  theme_void()
+```
+
+
+

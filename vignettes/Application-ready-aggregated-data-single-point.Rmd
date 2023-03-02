@@ -1,0 +1,203 @@
+---
+title: "Explore application ready aggregated data - Single point"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Explore application ready aggregated data - Single point}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(climateChangeInAustralia)
+
+# 
+library(stars)
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(ggplot2)
+library(units)
+```
+
+## Application ready aggregated
+
+See [introduction to application ready data](https://www.climatechangeinaustralia.gov.au/en/obtain-data/application-ready-data/).
+The aggregated files contain Monthly, seasonal and annual data as time-series. They 
+contain a single time value per range period (e.g. 2016-2045 has only 2031-01-01) per grid point (lat/lon),
+and then model values for monthly, seasonal and annual data (the remaining 'columns')
+
+### A small download
+
+Note how the datetime_start have no effect ...
+
+```{r}
+ccia_dataset_urls <- ccia_dataset_urls()
+
+dataset_url <- 
+  ccia_dataset_urls$
+  application_ready_aggregated$
+  Mean_Temperature$
+  `2016-2045`$
+  `tas_aus_ACCESS1-0_rcp45_r1i1p1_CSIRO-MnCh-wrt-1986-2005-Scl_v1_mon_seasavg_2016-2045_clim.nc`
+
+dataset_query <-
+  dataset_url |>
+  ccia_create_dataset_request_url(access_type = ccia_access_types$NetcdfSubset) |>
+  ccia_add_netcdf_subset_query(vars = 'all',
+                               lat = -33.86,
+                               lon = 151.20,
+                               # No effect (in this case)
+                               datetime_start = '2016-01-01',
+                               datetime_end = '2045-12-31',
+                               datetime_step = 365)
+
+dataset_download_filepath <-
+  dataset_query |>
+  ccia_perform_query(destfile = tempfile(fileext = 'tas_aus_ACCESS1-0_rcp45_seasavg_2016-2045.nc'))
+
+structure(
+  file.size(dataset_download_filepath),
+  class = 'object_size'
+) |>
+  format(units = 'MB')
+```
+
+```{r}
+ncdf_tibble <-
+  dataset_download_filepath |>
+  stars::read_ncdf() |>
+  tibble::as_tibble()
+
+ncdf_tibble
+```
+
+```{r}
+# monthly, seasonal and annual data
+names(ncdf_tibble) |>
+  cat(sep = '\n')
+
+# time range
+range(ncdf_tibble$time)
+```
+
+### A time-series download
+
+```{r}
+ccia_dataset_urls <- ccia_dataset_urls()
+
+# Extract model 'ACCESS1-0_rcp85' through element names
+series_urls <-
+  ccia_dataset_urls$application_ready_aggregated$Mean_Temperature |>
+  lapply(function(urls){
+    urls[grepl('ACCESS1-0_rcp85', names(urls))]
+  })
+
+# Expect 4 results
+sapply(series_urls, names)
+
+# Build requests
+series_requests <-
+  lapply(series_urls, function(url){
+    
+    url |>
+      ccia_create_dataset_request_url(access_type = ccia_access_types$NetcdfSubset) |>
+      ccia_add_netcdf_subset_query(vars = 'all',
+                                   lat = -33.86,
+                                   lon = 151.20)
+    
+  })
+
+# Download data
+series_filepaths <-
+  lapply(series_requests, function(req){
+    
+    filename <- sub('.*\\d/(.*\\.nc).*', '\\1', req$url)
+  
+    req |>
+      ccia_perform_query(destfile =  tempfile(pattern = 'ccia-', fileext = filename))
+    
+  })
+```
+
+Import into R and do things.
+
+```{r}
+# Merge data into a tibble
+series_tibble <-
+  purrr::map_df(series_filepaths, function(filepath){
+    filepath |>
+      stars::read_ncdf() |>
+      tibble::as_tibble()
+  })
+```
+
+```{r}
+series_tibble
+
+range(c(series_tibble$lon, series_tibble$lat))
+range(series_tibble$time)
+unique(series_tibble$time)
+```
+
+### Some data visualisation
+
+#### Annual
+
+```{r}
+series_tibble |>
+  ggplot(aes(x = time, y = tas_annual)) +
+  geom_point() +
+  labs(title = 'Annual mean temperature', 
+       subtitle = 'at: -33.85, 151.2, model: ACCESS1-0_rcp85')
+```
+
+#### Monthly
+
+```{r}
+series_tibble |>
+  dplyr::select(time, dplyr::contains(month.name)) |>
+  tidyr::pivot_longer(-time) |>
+  dplyr::arrange(time) |>
+  dplyr::mutate(month = sub('tas_', '', name),
+                year = format(time, '%Y'),
+                month = forcats::fct_inorder(month)) |>
+  ggplot(aes(x = month, y = value, shape = year, group = year)) +
+  geom_line() +
+  geom_point() +
+  labs(title = 'Monthly mean temperature', 
+       subtitle = 'at: -33.85, 151.2, model: ACCESS1-0_rcp85') +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.33))
+```
+
+#### Seasonal
+
+```{r}
+series_tibble |>
+  dplyr::select(time, tas_djf, tas_mam, tas_jja, tas_son) |>
+  tidyr::pivot_longer(-time) |>
+  dplyr::arrange(time) |>
+  dplyr::mutate(season = dplyr::case_when(
+    name == 'tas_djf' ~ 'Summer',
+    name == 'tas_mam' ~ 'Autumn',
+    name == 'tas_jja' ~ 'winter',
+    name == 'tas_son' ~ 'Spring',
+  ),
+  year = format(time, '%Y'),
+  season = forcats::fct_inorder(season)) |>
+  ggplot(aes(x = season, y = value, shape = year, group = year)) +
+  geom_line() +
+  geom_point() +
+  labs(title = 'Seasonal mean temperature', 
+       subtitle = 'at: -33.85, 151.2, model: ACCESS1-0_rcp85') +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.33))
+```
+
+
+
