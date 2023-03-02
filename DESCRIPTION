@@ -21,6 +21,7 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
+    tidyr,
     xml2
 Config/testthat/edition: 3
 URL: https://shaunson26.github.io/climateChangeInAustralia/

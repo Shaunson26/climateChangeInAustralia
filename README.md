@@ -6,8 +6,8 @@
 <!-- badges: start -->
 
 ![GitHub R package
-version](https://img.shields.io/github/r-package/v/shaunson26/climateInChangeAustralia)
-[![R-CMD-check](https://github.com/Shaunson26/climateInChangeAustralia/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Shaunson26/climateInChangeAustralia/actions/workflows/R-CMD-check.yaml)
+version](https://img.shields.io/github/r-package/v/shaunson26/climateChangeInAustralia)
+[![R-CMD-check](https://github.com/Shaunson26/climateChangeInAustralia/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Shaunson26/climateChangeInAustralia/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of climateChangeInAustralia is to create an API to [Climate
@@ -370,7 +370,7 @@ temp_file_nc <- tempfile(fileext = '.nc')
 ara_mean_temp_2016_access1_rcp45_req_filepath <-
   ara_mean_temp_2016_access1_rcp45_req_query |>
   ccia_perform_query(destfile = temp_file_nc)
-#> file downloaded to: C:\Users\Shaunus\AppData\Local\Temp\RtmpcXUHPx\file33c0540e31ec.nc
+#> file downloaded to: C:\Users\Shaunus\AppData\Local\Temp\RtmpCin1kI\file373862386bc9.nc
 ```
 
 Using the `stars` package
