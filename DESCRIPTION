@@ -13,6 +13,7 @@ Suggests:
     forcats,
     ggplot2,
     knitr,
+    ncmeta,
     rmarkdown,
     sf,
     stars,
