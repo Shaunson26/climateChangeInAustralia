@@ -1,0 +1,11 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  Application-ready-aggregated-data-grid-of-point: Application-ready-aggregated-data-grid-of-point.html
+  Application-ready-aggregated-data-single-point: Application-ready-aggregated-data-single-point.html
+last_built: 2023-03-03T11:13Z
+urls:
+  reference: https://shaunson26.github.io/climateChangeInAustralia/reference
+  article: https://shaunson26.github.io/climateChangeInAustralia/articles
+
